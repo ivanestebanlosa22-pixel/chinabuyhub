@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied'
+  });
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SCWHX36FR2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-SCWHX36FR2');
+</script>
+<script src="scripts/consent.js" defer></script>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, follow">
+    <meta name="description" content="Product detail page. Browse verified products and buy through trusted Chinese shopping agents with free QC photos.">
+    <link rel="canonical" href="https://www.chinabuyhub.com/product">
+    <link rel="alternate" hreflang="en" href="https://www.chinabuyhub.com/product">
+    <link rel="alternate" hreflang="en-US" href="https://www.chinabuyhub.com/product">
+    <link rel="alternate" hreflang="x-default" href="https://www.chinabuyhub.com/product">
+    <meta property="og:type" content="product">
+    <meta property="og:title" content="Product Details | ChinaBuyHub">
+    <meta property="og:description" content="Browse thousands of verified products with real QC photos. Buy safely from China through trusted agents.">
+    <meta property="og:url" content="https://www.chinabuyhub.com/product">
+    <meta property="og:image" content="https://www.chinabuyhub.com/images/og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Product Details | ChinaBuyHub">
+    <meta name="twitter:description" content="Browse thousands of verified products with real QC photos. Buy safely from China through trusted agents.">
+    <meta name="twitter:image" content="https://www.chinabuyhub.com/images/og-image.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://si.geilicdn.com">
+    <link rel="stylesheet" href="css/tokens.css?v=20260620" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="css/shared.css?v=20260625" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="css/product.css?v=20260625" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="css/tokens.css?v=20260620"><link rel="stylesheet" href="css/shared.css?v=20260625"><link rel="stylesheet" href="css/product.css?v=20260625"></noscript>
+    <script type="application/ld+json" id="productSchema"></script>
+    <title>Product Details | ChinaBuyHub</title>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
+
+    <header class="site-header">
+        <a href="/" class="logo-header-text" aria-label="ChinaBuyHub Home">ChinaBuyHub</a>
+        <nav aria-label="Main navigation" class="nav-menu" id="mainNav">
+            <a href="/">Home</a>
+            <a href="/catalog">Catalog</a>
+            <a href="/agents">Agents &amp; Bonuses</a>
+            <a href="/tools">Tools</a>
+            <a href="/blog">Blog &amp; Guides</a>
+            <a href="/extension">Chrome Extension</a>
+        </nav>
+        <button type="button" class="hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mainNav">
+            <span></span><span></span><span></span>
+        </button>
+    </header>
+
+    <main id="main-content">
+        <div id="productLoading" class="product-loading" aria-live="polite">
+            <div class="skeleton skeleton-card">
+                <div class="skeleton skeleton-image"></div>
+                <div class="product-info">
+                    <div class="skeleton skeleton-title"></div>
+                    <div class="skeleton skeleton-text"></div>
+                    <div class="skeleton skeleton-price"></div>
+                    <div class="skeleton skeleton-btn"></div>
+                    <div class="skeleton skeleton-btn"></div>
+                </div>
+            </div>
+        </div>
+
+        <article id="productDetail" class="product-detail" hidden>
+            <nav class="breadcrumb" aria-label="Breadcrumb">
+                <ol>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/catalog">Catalog</a></li>
+                    <li><span id="breadcrumbCategory"></span></li>
+                    <li><span id="breadcrumbName"></span></li>
+                </ol>
+            </nav>
+
+            <div class="product-gallery">
+                <div class="main-image-wrapper">
+                    <img id="mainImage" src="" alt="" class="main-image" fetchpriority="high" loading="eager">
+                </div>
+            </div>
+
+            <div class="product-meta">
+                <span id="productCategory" class="product-category"></span>
+                <h1 id="productName" class="product-name"></h1>
+                <div id="productBadges" class="product-badges"></div>
+                <p id="productDescription" class="product-description"></p>
+                <div class="product-price-row">
+                    <span id="productPrice" class="product-price" translate="no"></span>
+                    <div class="product-likes" id="productLikes" role="button" tabindex="0" aria-label="Like this product">
+                        <span class="like-icon">&#x1F499;</span>
+                        <span class="like-count">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-actions">
+                <h2>Buy from Verified Agents</h2>
+                <div id="agentLinks" class="agent-links"></div>
+            </div>
+
+            <section class="product-specs">
+                <h2>Details</h2>
+                <dl id="productSpecs" class="specs-list"></dl>
+            </section>
+
+            <section class="related-section">
+                <h2>You May Also Like</h2>
+                <div id="relatedProducts" class="related-grid"></div>
+            </section>
+        </article>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <div id="bottomAgentBar" class="bottom-agent-bar">
+        <span>Best agents:</span>
+        <a href="https://www.usfans.com/register?ref=RCGD5Y" target="_blank" rel="noopener noreferrer">USFans (RCGD5Y)</a>
+        <span class="bar-separator">&#8212;</span>
+        <a href="https://ikako.vip/r/FINDSES" target="_blank" rel="noopener noreferrer">Kakobuy (FINDSES)</a>
+        <span class="bar-separator">&#8212;</span>
+        <a href="https://litbuy.com/register?inviteCode=YBMHFG55L" target="_blank" rel="noopener noreferrer">Litbuy (YBMHFG55L)</a>
+        <button class="bar-close" aria-label="Close agent bar">&times;</button>
+    </div>
+
+    <script src="products.js?v=20260625" onerror="window._productsLoadFailed=true"></script>
+    <script src="js/nav-menu.js?v=20260625" defer></script>
+    <script src="js/product-detail.js?v=20260625" defer></script>
+    <script src="js/footer.js?v=20260630" defer></script>
+</body>
+</html>
