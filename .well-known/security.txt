@@ -1,0 +1,5 @@
+Contact: mailto:info@chinabuyhub.com
+Expires: 2027-07-01T00:00:00Z
+Preferred-Languages: en, es
+Canonical: https://www.chinabuyhub.com/.well-known/security.txt
+Policy: https://www.chinabuyhub.com/legal
