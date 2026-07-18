@@ -27,7 +27,7 @@
 
     var catalogAgents = {
         'KAKOBUY': { name: 'Kakobuy', logo: 'images/kakobuy-logo.jpg' },
-        'LITBUY': { name: 'Litbuy', logo: 'images/litbuy-logo.png' },
+        'LITBUY': { name: 'Litbuy', logo: 'images/litbuy-logo.webp' },
         'USFANS': { name: 'USFans', logo: 'https://s3-eu-west-1.amazonaws.com/tpd/logos/6825a376b16be873d3c23e82/0x0.png' }
     };
 
@@ -188,12 +188,12 @@
                 return '<div class="product-card" data-tilt>' +
                     '<div class="card-shine"></div>' +
                     '<div class="card-border-glow"></div>' +
-                    (product.badge ? '<div class="product-badge badge-' + product.badge.toLowerCase() + '">' + product.badge + '</div>' : '') +
+                    (product.badge ? '<div class="product-badge badge-' + escapeHtml(product.badge.toLowerCase()) + '">' + escapeHtml(product.badge) + '</div>' : '') +
                     '<div class="product-likes' + (isLiked ? ' liked' : '') + '" data-product-id="' + product.id + '" role="button" tabindex="0" aria-label="Like ' + escapeHtml(product.name) + '">' +
                         '<span class="like-icon">' + (isLiked ? '\u2764\uFE0F' : '\uD83D\uDC99') + '</span>' +
                         '<span class="like-count">' + displayLikes + '</span>' +
                     '</div>' +
-                    '<a href="/product?id=' + product.id + '" class="product-image-link">' +
+                    '<a href="/product/' + product.id + '" class="product-image-link" aria-label="View ' + escapeHtml(product.name) + '">' +
                     '<div class="product-image-wrapper">' +
                         '<img src="' + (product.image || '') + '" alt="' + escapeHtml(product.name || 'Product') + '" class="product-image" loading="lazy" data-loaded="false" fetchpriority="' + (index === 0 && state.currentPage === 1 ? 'high' : 'auto') + '">' +
                         '<div class="product-image-fallback">\uD83D\uDCE6</div>' +
@@ -201,7 +201,7 @@
                     '</a>' +
                     '<div class="product-info">' +
                         '<div class="product-category">' + escapeHtml(product.category || '') + '</div>' +
-                        '<h3 class="product-name"><a href="/product?id=' + product.id + '" class="product-name-link">' + escapeHtml(product.name || '') + '</a></h3>' +
+                        '<h3 class="product-name"><a href="/product/' + product.id + '" class="product-name-link">' + escapeHtml(product.name || '') + '</a></h3>' +
                         '<p class="product-description">' + escapeHtml(product.description || '') + '</p>' +
                         '<div class="product-footer">' +
                             '<span class="product-price" translate="no">$' + product.price + '</span>' +
@@ -630,30 +630,62 @@
 
         renderSkeletons(32, container);
 
-        fetch('data/all-products.json?v=20260625')
-            .then(function (r) {
-                if (!r.ok) throw new Error('HTTP ' + r.status);
+        function initWithData(data) {
+            _allProducts = data.filter(hasImage);
+            state.isFirstRender = false;
+            initFuse(_allProducts);
+            updateCategoryCounts();
+            buildBrandFilters();
+            renderProducts();
+            bindCategoryButtons();
+            bindSearchInput();
+            bindGenderButtons();
+            
+        }
+
+        function showLoadError(err) {
+            console.error('Catalog load error:', err);
+            if (container) {
+                container.innerHTML = '<div class="no-results"><h3>Error loading products</h3>' +
+                    '<p>The product catalog could not be loaded. Please refresh the page.</p>' +
+                    '<p style="font-size:13px;color:#888;margin-top:10px">If this persists, contact support.</p></div>';
+            }
+        }
+
+        // Load each category chunk independently instead of one ~9MB blob.
+        // If one chunk is slow/corrupted/truncated in transit, only that
+        // category is skipped — the rest of the catalog still renders.
+        var CATEGORY_FILES = ['ACCESSORIES', 'BAGS', 'CAPS', 'ELECTRONICS', 'HOODIES', 'JACKETS', 'PANTS', 'SHORTS', 'SNEAKERS', 'T-SHIRTS', 'WOMAN'];
+
+        function fetchJsonWithRetry(url, attempt) {
+            attempt = attempt || 1;
+            var bustUrl = attempt === 1 ? url : url + (url.indexOf('?') === -1 ? '?' : '&') + 'retry=' + Date.now();
+            return fetch(bustUrl, { cache: attempt === 1 ? 'default' : 'reload' }).then(function (r) {
+                if (!r.ok) throw new Error('HTTP ' + r.status + ' for ' + url);
                 return r.json();
-            })
-            .then(function (data) {
-                _allProducts = data.filter(hasImage);
-                state.isFirstRender = false;
-                initFuse(_allProducts);
-                updateCategoryCounts();
-                buildBrandFilters();
-                renderProducts();
-                bindCategoryButtons();
-                bindSearchInput();
-                bindGenderButtons();
-                console.log('Catalog loaded: ' + _allProducts.length + ' products');
-            })
-            .catch(function () {
-                if (container) {
-                    container.innerHTML = '<div class="no-results"><h3>Error loading products</h3>' +
-                        '<p>The product catalog could not be loaded. Please refresh the page.</p>' +
-                        '<p style="font-size:13px;color:#888;margin-top:10px">If this persists, contact support.</p></div>';
-                }
+            }).catch(function (err) {
+                if (attempt >= 2) throw err;
+                return fetchJsonWithRetry(url, attempt + 1);
             });
+        }
+
+        function loadAllCategoryChunks() {
+            var promises = CATEGORY_FILES.map(function (cat) {
+                return fetchJsonWithRetry('/data/' + encodeURIComponent(cat) + '.json?v=20260706').catch(function (err) {
+                    console.error('Category chunk failed, skipping: ' + cat, err);
+                    return [];
+                });
+            });
+            return Promise.all(promises).then(function (chunks) {
+                var merged = [].concat.apply([], chunks);
+                if (merged.length === 0) throw new Error('All category chunks failed to load');
+                return merged;
+            });
+        }
+
+        loadAllCategoryChunks()
+            .then(initWithData)
+            .catch(showLoadError);
     }
 
     if (document.readyState === 'loading') {

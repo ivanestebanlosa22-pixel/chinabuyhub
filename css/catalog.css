@@ -1,4 +1,4 @@
-﻿* {
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -94,7 +94,7 @@ header {
 }
 
 .catalog-subtitle {
-    color: var(--text-muted);
+    color: #d0cdc5;
     font-size: var(--text-lg);
 }
 
@@ -181,13 +181,13 @@ header {
     border-color: transparent;
 }
 
-/* Gender filter buttons — subtle toggle style */
+/* Gender filter buttons � subtle toggle style */
 .gender-btn {
     padding: var(--space-2) var(--space-5);
     background: var(--border-light);
     border-radius: 20px;
     border: 1px solid var(--border);
-    color: var(--text-muted);
+    color: #e0ddd5;
     cursor: pointer;
     font-size: var(--text-xs);
     transition: all 0.25s ease;
@@ -249,14 +249,14 @@ header {
     box-shadow: 0 0 0 4px rgba(0, 212, 255, 0.15);
 }
 
-.search-bar input::placeholder { color: var(--text-muted); }
+.search-bar input::placeholder { color: #e0ddd5; }
 
 .search-bar-icon {
     position: absolute;
     left: 18px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--text-muted);
+    color: #e0ddd5;
     font-size: var(--text-base);
     pointer-events: none;
 }
@@ -269,7 +269,7 @@ header {
     margin: 8px auto 0;
     max-width: 500px;
     font-size: var(--text-xs);
-    color: var(--text-muted);
+    color: #e0ddd5;
     cursor: pointer;
     user-select: none;
 }
@@ -284,7 +284,7 @@ header {
 .search-results-count {
     text-align: center;
     font-size: var(--text-sm);
-    color: var(--text-muted);
+    color: #e0ddd5;
     margin-bottom: var(--space-5);
     min-height: 20px;
 }
@@ -319,7 +319,7 @@ header {
     border-color: var(--brand-accent);
 }
 
-/* Tilt active state â€” JS adds this class on mouseenter */
+/* Tilt active state — JS adds this class on mouseenter */
 .product-card.card-tilting {
     transition: box-shadow 0.15s ease, border-color 0.15s ease;
 }
@@ -545,10 +545,10 @@ header {
 .usfans-btn:hover { box-shadow: 0 4px 14px rgba(255, 145, 0, 0.6); }
 
 .litbuy-btn {
-    background: linear-gradient(135deg, #ff1744, #d50000);
-    border-color: #ff1744;
+    background: linear-gradient(135deg, #06ffa5, #00cc83);
+    border-color: #06ffa5;
 }
-.litbuy-btn:hover { box-shadow: 0 4px 14px rgba(255, 23, 68, 0.6); }
+.litbuy-btn:hover { box-shadow: 0 4px 14px rgba(6, 255, 165, 0.6); }
 
 .kakobuy-btn {
     background: linear-gradient(135deg, #9c27b0, #7b1fa2);
@@ -672,12 +672,12 @@ header {
 }
 
 .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
-.page-info { color: var(--text-muted); padding: 0 var(--space-3); }
+.page-info { color: #e0ddd5; padding: 0 var(--space-3); }
 
 .no-results {
     text-align: center;
     padding: var(--space-20) var(--space-5);
-    color: var(--text-muted);
+    color: #e0ddd5;
 }
 
 .no-results h3 {
@@ -711,7 +711,7 @@ header {
 
 .bottom-agent-bar a { color: var(--brand-accent); text-decoration: none; font-weight: var(--weight-bold); white-space: nowrap; }
 .bottom-agent-bar a:hover { color: var(--brand-primary); text-decoration: underline; }
-.bottom-agent-bar .bar-separator { color: var(--text-muted); margin: 0 2px; }
+.bottom-agent-bar .bar-separator { color: #e0ddd5; margin: 0 2px; }
 .bottom-agent-bar .bar-close {
     background: none;
     border: 1px solid var(--border-hover);

@@ -3,3 +3,4 @@ Allow: /
 Disallow: /api/
 Disallow: /404.html
 Sitemap: https://www.chinabuyhub.com/sitemap.xml
+Sitemap: https://www.chinabuyhub.com/sitemap-products.xml

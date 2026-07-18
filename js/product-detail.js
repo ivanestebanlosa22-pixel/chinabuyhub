@@ -3,7 +3,7 @@
 
     var catalogAgents = {
         'KAKOBUY': { name: 'Kakobuy', logo: 'images/kakobuy-logo.jpg' },
-        'LITBUY': { name: 'Litbuy', logo: 'images/litbuy-logo.png' },
+        'LITBUY': { name: 'Litbuy', logo: 'images/litbuy-logo.webp' },
         'USFANS': { name: 'USFans', logo: 'https://s3-eu-west-1.amazonaws.com/tpd/logos/6825a376b16be873d3c23e82/0x0.png' }
     };
 
@@ -16,17 +16,53 @@
     var likedProducts = JSON.parse(localStorage.getItem('likedProducts') || '{}');
     var likedCounts = JSON.parse(localStorage.getItem('likedCounts') || '{}');
 
+    // Populated once loadProductData() resolves \u2014 holds only the products
+    // belonging to this item's category (not the whole catalog).
+    var products = null;
+
     function getProductIdFromUrl() {
         var params = new URLSearchParams(window.location.search);
-        return params.get('id');
+        if (params.get('id')) return params.get('id');
+        var m = window.location.pathname.match(/\/product\/([^/]+)\/?/);
+        return m ? m[1] : null;
     }
 
     function findProduct(id) {
-        if (typeof products === 'undefined') return null;
+        if (!products) return null;
         for (var i = 0; i < products.length; i++) {
             if (products[i].id === id) return products[i];
         }
         return null;
+    }
+
+    /* ---- DATA LOADING ----
+       Instead of shipping the full ~8MB catalog to every product page,
+       we fetch a small id->category index, then only the one category
+       chunk (data/<CATEGORY>.json) that actually contains this product.
+       Each fetch is retried once with a cache-busting param before failing,
+       since a truncated/corrupt transfer is the main failure mode for a
+       large file served over flaky connections. */
+    function fetchJsonWithRetry(url, attempt) {
+        attempt = attempt || 1;
+        var bustUrl = attempt === 1 ? url : url + (url.indexOf('?') === -1 ? '?' : '&') + 'retry=' + Date.now();
+        return fetch(bustUrl, { cache: attempt === 1 ? 'default' : 'reload' }).then(function (r) {
+            if (!r.ok) throw new Error('HTTP ' + r.status + ' for ' + url);
+            return r.json();
+        }).catch(function (err) {
+            if (attempt >= 2) throw err;
+            return fetchJsonWithRetry(url, attempt + 1);
+        });
+    }
+
+    function loadProductData(id) {
+        return fetchJsonWithRetry('/data/product-index.json').then(function (index) {
+            var category = index[id];
+            if (!category) throw new Error('Product id not found in index: ' + id);
+            return fetchJsonWithRetry('/data/' + encodeURIComponent(category) + '.json');
+        }).then(function (categoryProducts) {
+            products = categoryProducts;
+            return products;
+        });
     }
 
     function escapeHtml(str) {
@@ -190,7 +226,7 @@
     }
 
     function loadRelatedProducts(product) {
-        if (typeof products === 'undefined') return;
+        if (!products) return;
         var sameCategory = products.filter(function(p) {
             return p.category === product.category && p.id !== product.id && p.image && p.image.indexOf('http') === 0;
         });
@@ -207,30 +243,34 @@
                     '<span class="related-price">$' + p.price + '</span>' +
                     '<div class="related-links">' + linksHtml + '</div>' +
                 '</div>' +
-                '<a href="/product?id=' + p.id + '" class="related-overlay" aria-label="View ' + escapeHtml(p.name) + '"></a>' +
+                '<a href="/product/' + p.id + '" class="related-overlay" aria-label="View ' + escapeHtml(p.name) + '"></a>' +
             '</div>';
         }).join('');
     }
 
-    function init() {
-        if (typeof products === 'undefined' || window._productsLoadFailed) {
-            document.getElementById('productLoading').innerHTML = '<div class="no-results"><h3>Error loading product</h3><p>The product catalog could not be loaded. <a href="/catalog">Back to catalog</a></p></div>';
-            return;
-        }
+    function showError(message) {
+        document.getElementById('productLoading').innerHTML =
+            '<div class="no-results"><h3>Error loading product</h3><p>' + message + ' <a href="/catalog">Back to catalog</a></p></div>';
+    }
 
+    function init() {
         var productId = getProductIdFromUrl();
         if (!productId) {
             document.getElementById('productLoading').innerHTML = '<div class="no-results"><h3>Product not specified</h3><p>No product ID provided. <a href="/catalog">Browse catalog</a></p></div>';
             return;
         }
 
-        var product = findProduct(productId);
-        if (!product) {
-            document.getElementById('productLoading').innerHTML = '<div class="no-results"><h3>Product not found</h3><p>Product ID "' + escapeHtml(productId) + '" not found. <a href="/catalog">Browse catalog</a></p></div>';
-            return;
-        }
-
-        renderProduct(product);
+        loadProductData(productId).then(function () {
+            var product = findProduct(productId);
+            if (!product) {
+                document.getElementById('productLoading').innerHTML = '<div class="no-results"><h3>Product not found</h3><p>Product ID "' + escapeHtml(productId) + '" not found. <a href="/catalog">Browse catalog</a></p></div>';
+                return;
+            }
+            renderProduct(product);
+        }).catch(function (err) {
+            console.error('Product load error:', err);
+            showError('The product catalog could not be loaded.');
+        });
     }
 
     if (document.readyState === 'loading') {

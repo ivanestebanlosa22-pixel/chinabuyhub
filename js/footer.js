@@ -14,7 +14,7 @@
     <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 30px;">
         <div>
             <h3 style="font-size: 20px; margin-bottom: 15px; background: linear-gradient(135deg, #00d4ff, #ff006e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800;">ChinaBuyHub</h3>
-            <p style="color: #888; line-height: 1.7; font-size: 13px;">Independent guide to Chinese shopping agents. We test, review and compare verified agents to help buyers in Spain access premium products from China safely and save 60-80%.</p>
+            <p style="color: #aaa; line-height: 1.7; font-size: 13px;">Independent guide to Chinese shopping agents. We test, review and compare verified agents to help buyers in Spain access premium products from China safely and save 60-80%.</p>
         </div>
         <div>
             <h4 style="font-size: 15px; margin-bottom: 15px; color: #fff;">Main Pages</h4>

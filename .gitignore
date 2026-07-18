@@ -1,0 +1,42 @@
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# API keys and sensitive data
+ai-config.php.bak
+*.key
+*.pem
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Lighthouse / audit data
+.unlighthouse/
+
+# Google Search Console data
+_gsc_extract/
+
+# Coverage / reports
+*.zip
+*.gz
+
+# Temporary files
+tmp/
+temp/
+*.tmp

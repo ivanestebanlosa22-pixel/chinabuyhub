@@ -34,11 +34,11 @@
 .breadcrumb {
     margin-bottom: var(--space-8);
     font-size: var(--text-sm);
-    color: var(--text-muted);
+    color: #e0ddd5;
 }
 .breadcrumb ol { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; }
 .breadcrumb li { display: flex; align-items: center; gap: 8px; }
-.breadcrumb li:not(:last-child)::after { content: '/'; color: var(--text-muted); }
+.breadcrumb li:not(:last-child)::after { content: '/'; color: #e0ddd5; }
 .breadcrumb a { color: var(--text-link); transition: color 0.2s; }
 .breadcrumb a:hover { color: var(--brand-accent); }
 
@@ -172,7 +172,7 @@
 }
 .product-specs h2 { margin-bottom: var(--space-6); font-size: var(--text-2xl); }
 .specs-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4); }
-.specs-list dt { font-size: var(--text-sm); color: var(--text-muted); text-transform: uppercase; letter-spacing: var(--tracking-wide); }
+.specs-list dt { font-size: var(--text-sm); color: #e0ddd5; text-transform: uppercase; letter-spacing: var(--tracking-wide); }
 .specs-list dd { font-size: var(--text-base); color: var(--text-primary); font-weight: var(--weight-medium); margin: 0; }
 
 .related-section { max-width: 1200px; margin: 0 auto; }

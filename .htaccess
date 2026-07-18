@@ -50,14 +50,22 @@ Options -Indexes
 RewriteEngine On
 
 # FORCE HTTPS + WWW (Hostinger)
-RewriteCond %{HTTP:X-Forwarded-Proto} =http [OR]
+RewriteCond %{HTTP:X-Forwarded-Proto} !https [OR]
 RewriteCond %{HTTP_HOST} !^www\.chinabuyhub\.com$ [NC]
 RewriteRule ^(.*)$ https://www.chinabuyhub.com/$1 [L,R=301]
 
-# NEVER REWRITE XML/STATIC FILES
-RewriteRule \.(xml|txt|pdf|zip|gz)$ - [L]
+# REDIRECT OLD CATEGORY PAGES (/c/*) TO MAIN CATALOG
+RewriteRule ^c/.*$ /catalog [L,R=301]
 
-# REDIRECT DELETED PRODUCTS to catalog
+# NEVER REWRITE XML/STATIC FILES
+RewriteRule \.(xml|txt|pdf|zip|gz|json)$ - [L]
+
+# SERVE PRODUCT DETAIL PAGES: /product/ID -> product.html
+RewriteRule ^product/([^/]+)/?$ product.html [L]
+
+# REDIRECT OLD PRODUCT URLS (/p/ID -> /product/ID, /p/ -> /catalog)
+RewriteRule ^p/([^/]+)/?$ /product/$1 [L,R=301]
+RewriteRule ^p/?$ /catalog [L,R=301]
 RewriteRule ^p/.*$ /catalog [L,R=301]
 RewriteRule ^p/?$ /catalog [L,R=301]
 
@@ -66,7 +74,7 @@ RewriteRule ^p/?$ /catalog [L,R=301]
 RewriteRule ^blog/finds-es/?$ /finds-es [L,R=301]
 RewriteRule ^catalogo/?$ /catalog [L,R=301]
 RewriteRule ^agentes(\.html?)?$ /agents [L,R=301]
-RewriteRule ^guias(/.*)?$ /how-to-buy [L,R=301]
+RewriteRule ^guias(/.*)?$ /blog/how-to-buy [L,R=301]
 RewriteRule ^usfans-review/?$ /blog/usfans-agent-review [L,R=301]
 RewriteRule ^usfans-agent-review/?$ /blog/usfans-agent-review [L,R=301]
 RewriteRule ^weidian-guide/?$ /blog/weidian-guide [L,R=301]

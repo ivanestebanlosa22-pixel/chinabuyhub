@@ -58,7 +58,6 @@
 /* TESTIMONIALS */
 .testimonials {
     padding: var(--space-20) var(--space-5);
-    background: var(--gradient-surface);
 }
 
 .section-title {
@@ -106,7 +105,7 @@
 
 .testimonial-text {
     font-size: 15px;
-    color: #ddd;
+    color: #e8e5dd;
     line-height: 1.6;
     font-style: italic;
 }
@@ -155,7 +154,7 @@
 
 .community-description {
     font-size: var(--text-base);
-    color: #bbb;
+    color: #e0ddd5;
     line-height: 1.8;
     max-width: 800px;
     margin: 30px auto 0;
@@ -193,7 +192,7 @@ footer {
 }
 
 .footer-links a {
-    color: var(--text-muted);
+    color: #e0ddd5;
     text-decoration: none;
     display: block;
     padding: var(--space-2) 0;
@@ -209,7 +208,7 @@ footer {
     text-align: center;
     padding-top: var(--space-8);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    color: var(--text-muted);
+    color: #e0ddd5;
     font-size: var(--text-sm);
 }
 
@@ -581,7 +580,7 @@ footer {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.4s ease, padding 0.4s ease;
-    color: var(--text-muted);
+    color: #e0ddd5;
     line-height: var(--leading-relaxed);
     font-size: 0.95rem;
 }
@@ -593,7 +592,6 @@ footer {
 /* ABOUT / AUTHORITY SECTION */
 .about-section {
     padding: var(--space-20) var(--space-5);
-    background: var(--gradient-surface);
 }
 .about-content {
     max-width: 900px;
@@ -617,8 +615,8 @@ footer {
     color: #ddd;
 }
 .about-text {
-    color: var(--text-muted);
-    line-height: var(--leading-relaxed);
+    color: #e0ddd5;
+    line-height: 1.8;
     font-size: var(--text-base);
     max-width: 750px;
     margin: var(--space-5) auto 0;
@@ -629,7 +627,7 @@ footer {
     padding: var(--space-6) var(--space-7);
     margin-top: var(--space-8);
     font-size: var(--text-sm);
-    color: var(--text-muted);
+    color: #d0cdc5;
     line-height: var(--leading-normal);
     text-align: center;
     border: 1px solid rgba(255, 255, 255, 0.06);

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <script>
@@ -31,6 +31,7 @@
     <link rel="canonical" href="https://www.chinabuyhub.com/">
     <link rel="alternate" hreflang="en" href="https://www.chinabuyhub.com/">
     <link rel="alternate" hreflang="en-US" href="https://www.chinabuyhub.com/">
+    <meta property="og:locale" content="en_US">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body { overflow-x: hidden; width: 100%; }
@@ -43,11 +44,25 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 40px 20px;
+            padding: 100px 20px 40px;
             text-align: center;
             overflow-x: hidden;
             width: 100%;
         }
+        .header-404 {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: rgba(10,10,10,0.95); backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 15px 30px; z-index: 1000; display: flex;
+            justify-content: space-between; align-items: center;
+        }
+        .header-404 .logo-text {
+            font-size: 28px; font-weight: 900;
+            background: linear-gradient(135deg,#00d4ff,#ff006e);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            letter-spacing: 1px; text-decoration: none;
+        }
+        @media (max-width: 768px) { .header-404 { padding: 12px 16px; } .header-404 .logo-text { font-size: 20px; } }
         .error-code {
             font-size: 120px;
             font-weight: 900;
@@ -63,7 +78,7 @@
             color: #fff;
         }
         p {
-            color: #aaa;
+            color:#e0ddd5;
             font-size: 16px;
             max-width: 500px;
             line-height: 1.7;
@@ -114,7 +129,7 @@
         }
         .link-card p {
             font-size: 13px;
-            color: #888;
+            color:#e0ddd5;
             margin: 0;
         }
         .home-link {
@@ -128,10 +143,28 @@
             h1 { font-size: 22px; }
         }
     </style>
-    <link rel="stylesheet" href="css/tokens.css?v=20260620">
-    <link rel="stylesheet" href="css/fx-layer.css?v=20260526">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
+    <style>:root{--pink-500:#ff006e;--cyan-400:#00d4ff;--amber-500:#ff8c00;--gray-400:#a39a90;--gray-500:#7d756c;--gray-600:#5d5650;--gray-700:#403a36;--surface:#0a0a0a;--surface-raised:#111;--surface-card:#1c1c1c;--text-primary:#fff;--text-secondary:var(--gray-400);--text-muted:var(--gray-600);--text-link:var(--cyan-400);--border:rgba(255,255,255,0.08);--border-subtle:rgba(255,255,255,0.06);--border-light:rgba(255,255,255,0.04);--border-hover:rgba(255,255,255,0.15);--brand-primary:var(--pink-500);--brand-accent:var(--cyan-400);--brand-gold:var(--amber-500);--gradient-primary:linear-gradient(135deg,var(--pink-500),#b8004a);--gradient-accent:linear-gradient(135deg,var(--cyan-400),#009cc0);--gradient-pink-cyan:linear-gradient(135deg,var(--pink-500),var(--cyan-400));--font-display:'Outfit',sans-serif;--font-body:'Inter',sans-serif;--text-xs:0.75rem;--text-sm:0.875rem;--text-base:1rem;--text-lg:1.125rem;--text-xl:1.25rem;--text-2xl:1.5rem;--text-3xl:2rem;--text-4xl:2.5rem;--text-5xl:3.25rem;--text-6xl:4rem;--leading-tight:1.15;--leading-snug:1.3;--leading-normal:1.5;--leading-relaxed:1.65;--weight-light:300;--weight-regular:400;--weight-medium:500;--weight-semibold:600;--weight-bold:700;--weight-extrabold:800;--weight-black:900;--space-1:0.25rem;--space-2:0.5rem;--space-3:0.75rem;--space-4:1rem;--space-5:1.25rem;--space-6:1.5rem;--space-7:1.75rem;--space-8:2rem;--space-10:2.5rem;--space-12:3rem;--space-16:4rem;--radius-sm:6px;--radius-md:10px;--radius-lg:14px;--radius-xl:20px;--radius-2xl:28px;--radius-full:9999px;--shadow-sm:0 1px 2px rgba(0,0,0,0.3);--shadow-md:0 4px 12px rgba(0,0,0,0.4);--shadow-lg:0 8px 30px rgba(0,0,0,0.5);--shadow-xl:0 20px 60px rgba(0,0,0,0.6);--shadow-glow-pink:0 0 20px rgba(255,0,110,0.3);--shadow-glow-cyan:0 0 20px rgba(0,212,255,0.3);--duration-fast:150ms;--duration-base:300ms;--duration-slow:500ms;--ease-out:cubic-bezier(0.16,1,0.3,1);--ease-in-out:cubic-bezier(0.65,0,0.35,1);--container-max:1200px;--header-height:70px;--fx-primary:var(--pink-500);--fx-primary-rgb:255,0,110;--fx-accent:var(--cyan-400);--fx-accent-rgb:0,212,255;--fx-gold:var(--amber-500);--fx-gold-rgb:255,140,0;--fx-orange:#ff6b35;--fx-bg:var(--surface);--fx-bg-rgb:10,10,10}@media(prefers-reduced-motion:reduce){:root{--duration-fast:0ms;--duration-base:0ms;--duration-slow:0ms}}@media(prefers-color-scheme:light){:root{--surface:#faf8f6;--surface-raised:#fff;--text-primary:#141210;--text-secondary:var(--gray-500);--border:rgba(0,0,0,0.08);--border-light:rgba(0,0,0,0.04)}}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden;width:100%;-webkit-text-size-adjust:100%}body{font-family:var(--font-body),-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:var(--text-base);line-height:var(--leading-normal);color:var(--text-primary);background-color:var(--surface);min-height:100vh;overflow-x:hidden;width:100%}img,video,canvas{max-width:100%;height:auto;display:block}a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}h1,h2,h3,h4,h5,h6{font-family:var(--font-display);font-weight:var(--weight-bold);line-height:var(--leading-tight);color:var(--text-primary)}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}header,section,footer,main,nav,.hero-content,.catalog-section,.featured-section,.testimonials,.community,.faq-section-visible,.about-section,.footer-content,.hero,.catalog-header,.about-content,.legal-content,.bottom-agent-bar{position:relative;z-index:1}.site-header,.site-header header,header{position:fixed;top:0;left:0;width:100%;background:rgba(10,10,10,0.95);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,0.1);padding:15px 30px;z-index:1000;display:flex;justify-content:space-between;align-items:center;transition:padding .35s ease,background .35s ease}header.scrolled{padding-top:var(--space-2)!important;padding-bottom:var(--space-2)!important;background:rgba(var(--fx-bg-rgb),0.9)!important}.logo-header-text{font-size:28px;font-weight:900;background:linear-gradient(135deg,#00d4ff,#ff006e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:1px;text-decoration:none}nav.nav-menu,nav[aria-label="Main navigation"]{display:flex;gap:24px;align-items:center}nav.nav-menu a,nav[aria-label="Main navigation"] a{color:#e0ddd5;font-size:14px;font-weight:500;text-decoration:none;transition:color .25s}nav.nav-menu a:hover,nav[aria-label="Main navigation"] a:hover{color:#00d4ff}.hamburger{background:none;border:none;display:flex;flex-direction:column;gap:6px;cursor:pointer;padding:10px;z-index:1001}.hamburger span{width:30px;height:3px;background:linear-gradient(135deg,#00d4ff,#ff006e);border-radius:3px;transition:all .3s ease}.skip-link{position:absolute;top:-100px;left:10px;background:#00d4ff;color:#000;padding:8px 16px;border-radius:6px;font-weight:600;z-index:9999;transition:top .2s}.skip-link:focus{top:10px}.bottom-agent-bar{position:fixed;bottom:0;left:0;width:100%;background:linear-gradient(135deg,rgba(0,212,255,0.15),rgba(255,0,110,0.12));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid rgba(255,255,255,0.12);padding:10px 20px;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;z-index:999;font-size:13px}.bottom-agent-bar a{color:#00d4ff;font-weight:600;white-space:nowrap}.bottom-agent-bar .bar-separator{color:rgba(255,255,255,0.2)}.bottom-agent-bar .bar-close{background:none;border:none;color:#d0cdc5;font-size:18px;cursor:pointer;padding:0 4px}@media(max-width:768px){header,.site-header{padding:12px 16px;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}.logo-header-text{font-size:20px}nav.nav-menu,nav[aria-label="Main navigation"]{display:none;flex-direction:column;position:fixed;top:70px;left:0;width:100%;background:rgba(10,10,10,0.98);padding:20px 30px;gap:16px;border-bottom:1px solid rgba(255,255,255,0.1);z-index:999}nav.nav-menu.active,nav[aria-label="Main navigation"].active{display:flex}}</style>
+  <link rel="preload" href="css/shared.css?v=20260706c" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="css/shared.css?v=20260706c"></noscript>
 </head>
 <body>
+    <header class="header-404">
+        <a href="/" class="logo-text" aria-label="ChinaBuyHub Home">ChinaBuyHub</a>
+        <nav aria-label="Main navigation" id="mainNav" style="display:none">
+            <a href="/">Home</a>
+            <a href="/catalog">Catalog</a>
+            <a href="/agents">Agents & Bonuses</a>
+            <a href="/tools">Tools</a>
+            <a href="/blog">Blog & Guides</a>
+        </nav>
+        <button type="button" class="hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mainNav">
+            <span></span><span></span><span></span>
+        </button>
+    </header>
     <div class="error-code">404</div>
     <h1>Page Not Found</h1>
     <p>The page you are looking for does not exist or has been moved. Don't worry — you can still find incredible deals on premium products.</p>
@@ -161,10 +194,10 @@
 
     <div id="footer-placeholder"></div>
 
-<script src="js/fx-layer.js?v=20260526" defer></script>
-<script src="js/nav-menu.js" defer></script>
+<script src="js/fx-layer.js?v=20260705" defer></script>
+<script src="js/nav-menu.js?v=20260708" defer></script>
 
-<script src="js/ai-widget.js" defer></script>
+<script>(function(){var l=false;function ld(){if(l)return;l=true;var s=document.createElement('script');s.src='js/ai-widget.js?v=20260705';document.body.appendChild(s);}window.addEventListener('scroll',ld,{once:true,passive:true});window.addEventListener('mousemove',ld,{once:true,passive:true});window.addEventListener('touchstart',ld,{once:true,passive:true});setTimeout(ld,3500);})();</script>
 <script src="js/footer.js?v=20260630" defer></script>
 </body>
 </html>
