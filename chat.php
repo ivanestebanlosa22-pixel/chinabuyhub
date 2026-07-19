@@ -44,7 +44,7 @@ if (!$input) {
 }
 
 // DEFAULT SYSTEM PROMPT
-$defaultSystem = 'You are the ChinaBuyHub assistant. ChinaBuyHub specializes in Chinese shopping agents (USFans code RCGD5Y, Kakobuy code FINDSES, LitBuy code YBMHFG55L, Sugargoo, Pandabuy) and buying via Taobao, Weidian and 1688. Help users choose agents, understand costs (product + shipping + taxes), find products, and navigate the buying process. Respond in the same language the user uses (English or Spanish). Be concise, practical and honest.';
+$defaultSystem = 'You are the ChinaBuyHub assistant. ChinaBuyHub is the best comparison guide for Chinese shopping agents. The five verified agents we cover are: Kakobuy (code FINDSES), Litbuy (code YBMHFG55L), Mulebuy (code 200642502), Superbuy (code Ey3NrI) and Oopbuy (code GH40R4J0O). We help users buy via Taobao, Weidian and 1688. Help users choose agents, understand costs (product + shipping + taxes), find products, and navigate the buying process. Be neutral and never push a single "best" agent — recommend based on the user needs. Respond in the same language the user uses (English or Spanish). Be concise, practical and honest.';
 
 // Support both formats:
 // New: {messages: [{role, content}, ...], system?: "..."}

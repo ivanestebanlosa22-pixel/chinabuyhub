@@ -23,7 +23,7 @@
         '#navOverlay.active{opacity:1;visibility:visible}',
 
         /* Panel */
-        '#navPanel{position:fixed;top:0;right:-440px;width:420px;max-width:92vw;height:100vh;',
+        '#navPanel{position:fixed;top:0;right:-440px;width:420px;max-width:92vw;height:auto;max-height:100vh;',
         'background:linear-gradient(180deg,rgba(14,14,18,0.995) 0%,rgba(8,8,12,0.998) 100%);',
         'backdrop-filter:blur(40px) saturate(200%);-webkit-backdrop-filter:blur(40px) saturate(200%);',
         'border-left:1px solid rgba(255,255,255,0.06);z-index:9999;',
@@ -61,7 +61,7 @@
         '#navPanelClose svg{width:18px;height:18px;position:relative;z-index:1}',
 
         /* Scroll area */
-        '#navPanelScroll{flex:1;overflow-y:auto;overflow-x:hidden;padding:12px 20px 24px;',
+        '#navPanelScroll{flex:0 0 auto;max-height:calc(100vh - 140px);overflow-y:auto;overflow-x:hidden;padding:12px 20px 24px;',
         'scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.08) transparent}',
         '#navPanelScroll::-webkit-scrollbar{width:3px}',
         '#navPanelScroll::-webkit-scrollbar-track{background:transparent}',
@@ -76,8 +76,8 @@
         '.nav-section:nth-child(6){animation-delay:0.25s}',
         '.nav-section:nth-child(7){animation-delay:0.3s}',
         '.nav-section:nth-child(8){animation-delay:0.35s}',
-        '.nav-section-title{font-size:0.65rem;text-transform:uppercase;letter-spacing:0.18em;',
-        'color:rgba(255,255,255,0.3);margin-bottom:8px;padding:8px 12px 6px;font-weight:700;',
+        '.nav-section-title{font-size:1.05rem;text-transform:uppercase;letter-spacing:0.12em;',
+        'color:#ffffff;margin-bottom:6px;padding:14px 14px 6px;font-weight:900;',
         'display:flex;align-items:center;gap:10px}',
         '.nav-section-title::before{content:"";width:3px;height:3px;border-radius:50%;',
         'background:linear-gradient(135deg,#00d4ff,#ff006e);flex-shrink:0}',
@@ -86,8 +86,8 @@
         '.nav-section-links{display:flex;flex-direction:column;gap:2px}',
 
         /* Links */
-        '.nav-link{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;',
-        'color:rgba(255,255,255,0.7);text-decoration:none;font-size:0.88rem;font-weight:500;',
+        '.nav-link{display:flex;align-items:center;gap:12px;padding:7px 14px;border-radius:12px;',
+        'color:rgba(255,255,255,0.82);text-decoration:none;font-size:0.82rem;font-weight:500;',
         'transition:all 0.25s cubic-bezier(0.4,0,0.2,1);position:relative;overflow:hidden}',
         '.nav-link::before{content:"";position:absolute;left:0;top:0;width:0;height:100%;',
         'background:linear-gradient(90deg,rgba(0,212,255,0.08),transparent);',
@@ -101,13 +101,13 @@
         'transform:translateY(-50%);width:3px;height:18px;',
         'background:linear-gradient(180deg,#00d4ff,#ff006e);border-radius:0 4px 4px 0;',
         'box-shadow:0 0 8px rgba(0,212,255,0.4)}',
-        '.nav-link-icon{font-size:1rem;width:24px;height:24px;display:flex;',
+        '.nav-link-icon{font-size:1.15rem;width:28px;height:28px;display:flex;',
         'align-items:center;justify-content:center;border-radius:8px;',
         'background:rgba(255,255,255,0.04);flex-shrink:0;transition:all 0.25s}',
         '.nav-link:hover .nav-link-icon{background:rgba(0,212,255,0.1);transform:scale(1.1)}',
         '.nav-link-label{flex:1;line-height:1.3}',
-        '.nav-link-sub{font-size:0.7rem;color:rgba(255,255,255,0.35);font-weight:400}',
-        '.nav-link:hover .nav-link-sub{color:rgba(255,255,255,0.6)}',
+        '.nav-link-sub{font-size:0.7rem;color:rgba(255,255,255,0.9);font-weight:400}',
+        '.nav-link:hover .nav-link-sub{color:rgba(255,255,255,0.8)}',
         '.nav-link-badge{font-size:0.6rem;padding:3px 8px;border-radius:6px;',
         'background:linear-gradient(135deg,#ff006e,#ff6b35);color:#fff;',
         'font-weight:700;letter-spacing:0.3px;flex-shrink:0;text-transform:uppercase}',
@@ -129,7 +129,7 @@
         'transform:rotate(45deg);animation:navShimmer 4s infinite}',
         '.nav-promo-title{font-size:0.75rem;font-weight:700;color:#ff8c00;',
         'margin-bottom:4px;letter-spacing:0.5px;text-transform:uppercase}',
-        '.nav-promo-text{font-size:0.82rem;color:rgba(255,255,255,0.7);line-height:1.4}',
+        '.nav-promo-text{font-size:0.82rem;color:rgba(255,255,255,0.95);line-height:1.4}',
         '.nav-promo-amount{font-size:1.4rem;font-weight:900;',
         'background:linear-gradient(135deg,#ffd700,#ff8c00);',
         '-webkit-background-clip:text;-webkit-text-fill-color:transparent;',
@@ -143,11 +143,16 @@
         /* Footer area */
         '.nav-footer{padding:16px 24px;border-top:1px solid rgba(255,255,255,0.06);',
         'flex-shrink:0;background:rgba(255,255,255,0.01)}',
-        '.nav-footer-links{display:flex;justify-content:center;gap:16px;margin-bottom:8px}',
-        '.nav-footer-link{font-size:0.7rem;color:rgba(255,255,255,0.3);',
-        'text-decoration:none;transition:color 0.2s}',
-        '.nav-footer-link:hover{color:#00d4ff}',
-        '.nav-footer-copy{font-size:0.65rem;color:rgba(255,255,255,0.15);text-align:center}',
+        '.nav-community-title{font-size:0.95rem;font-weight:800;color:#ffffff;text-align:center;',
+        'margin-bottom:12px;text-transform:uppercase;letter-spacing:0.08em}',
+        '.nav-footer-links{display:flex;justify-content:center;gap:10px;margin-bottom:10px}',
+        '.nav-social{font-size:0.85rem;font-weight:700;text-decoration:none;padding:9px 14px;',
+        'border-radius:10px;display:inline-flex;align-items:center;gap:6px;transition:all 0.2s}',
+        '.nav-social:hover{transform:translateY(-2px)}',
+        '.nav-social.discord{background:rgba(88,101,242,0.18);border:1px solid #5865F2;color:#ffffff}',
+        '.nav-social.telegram{background:rgba(0,212,255,0.14);border:1px solid #00d4ff;color:#ffffff}',
+        '.nav-social.reddit{background:rgba(255,140,0,0.14);border:1px solid #ff8c00;color:#ffffff}',
+        '.nav-footer-copy{font-size:0.7rem;color:rgba(255,255,255,0.95);text-align:center}',
 
         /* Mobile */
         '@media(max-width:480px){#navPanel{width:100vw;max-width:100vw;',
@@ -182,32 +187,31 @@
         p.setAttribute('aria-modal', 'true');
         p.innerHTML =
             '<div id="navPanelHeader">' +
-            '<div class="nav-logo-wrap">' +
-            '<div class="nav-logo-icon">CB</div>' +
-            '<div>' +
-            '<span class="nav-logo-text">ChinaBuyHub</span>' +
-            '<span class="nav-logo-badge">2026</span>' +
-            '</div>' +
-            '</div>' +
+            '<img src="images/logo.webp" alt="ChinaBuyHub" style="width:36px;height:36px;border-radius:10px;object-fit:cover;box-shadow:0 4px 15px rgba(0,212,255,0.3)">' +
             '<button id="navPanelClose" aria-label="Close menu">' +
             '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
             '</button>' +
             '</div>' +
             '<div id="navPanelScroll">' +
 
-            sec('NAVIGATION', [
-                { h: '/', l: 'Home', i: '🏠' },
-                { h: '/catalog', l: 'Catalog', i: '🛍️', b: '9,935+', bc: 'green' },
-                { h: '/agents', l: 'Agents & Bonuses', i: '🎁', b: 'TOP 3', bc: 'gold' },
-                { h: '/tools', l: 'Tools', i: '🛠️' },
-                { h: '/cost-calculator', l: 'Cost Calculator', i: '🧮' },
-                { h: '/finds-es', l: 'FindsES Sheet', i: '📊', b: 'NEW', bc: 'blue' },
-                { h: '/blog', l: 'Blog & Guides', i: '📝' },
-                { h: '/extension', l: 'Chrome Extension', i: '🧩', b: 'FREE', bc: 'blue' }
+            sec('EXPLORE', [
+                { h: '/catalog', l: 'Catalog', i: '📦' },
+                { h: '/finds-es', l: 'FindsES Sheet', i: '📋' }
             ]) +
 
-            sec('MORE', [
-                { h: '/about', l: 'About Us', i: 'ℹ️' },
+            sec('COMPARE', [
+                { h: '/agents', l: 'Agents & Bonuses', i: '🤝' },
+                { h: '/cost-calculator', l: 'Cost Calculator', i: '🧮' },
+                { h: '/tools', l: 'Tools', i: '🛠️' }
+            ]) +
+
+            sec('LEARN', [
+                { h: '/blog/', l: 'Blog & Guides', i: '📚' },
+                { h: '/extension', l: 'Chrome Extension', i: '🔌' },
+                { h: '/about', l: 'About Us', i: 'ℹ️' }
+            ]) +
+
+            sec('LEGAL', [
                 { h: '/extension-privacy', l: 'Extension Privacy', i: '🔒' },
                 { h: '/legal', l: 'Legal', i: '⚖️' }
             ]) +
@@ -215,10 +219,11 @@
             '</div>' +
 
             '<div class="nav-footer">' +
+            '<div class="nav-community-title">Join the Community</div>' +
             '<div class="nav-footer-links">' +
-            '<a href="https://t.me/repschinabuyhub" class="nav-footer-link" target="_blank" rel="noopener">Telegram</a>' +
-            '<a href="https://discord.gg/9gZaWVbwCx" class="nav-footer-link" target="_blank" rel="noopener">Discord</a>' +
-            '<a href="https://www.reddit.com/r/luxeechoreplicas/" class="nav-footer-link" target="_blank" rel="noopener">Reddit</a>' +
+            '<a href="https://discord.gg/9gZaWVbwCx" class="nav-social discord" target="_blank" rel="noopener noreferrer">💬 Discord</a>' +
+            '<a href="https://t.me/repschinabuyhub" class="nav-social telegram" target="_blank" rel="noopener noreferrer">✈️ Telegram</a>' +
+            '<a href="https://www.reddit.com/r/luxeechoreplicas/" class="nav-social reddit" target="_blank" rel="noopener noreferrer">🔥 Reddit</a>' +
             '</div>' +
             '<div class="nav-footer-copy">© 2024–2026 ChinaBuyHub</div>' +
             '</div>';

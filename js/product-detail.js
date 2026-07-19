@@ -1,16 +1,17 @@
-(function () {
+﻿(function () {
     'use strict';
 
     var catalogAgents = {
         'KAKOBUY': { name: 'Kakobuy', logo: 'images/kakobuy-logo.jpg' },
         'LITBUY': { name: 'Litbuy', logo: 'images/litbuy-logo.webp' },
-        'USFANS': { name: 'USFans', logo: 'https://s3-eu-west-1.amazonaws.com/tpd/logos/6825a376b16be873d3c23e82/0x0.png' }
     };
 
     var agentMessages = {
-        usfans: { text: '\u{1F1FA}\u{1F1F8} Best for USA & Europe', recommended: true },
-        litbuy: { text: '\u{1F381} $500 in Coupons', recommended: false },
-        kakobuy: { text: '\u26A1 Fast & Secure Shipping', recommended: false }
+        kakobuy: { text: 'Fast & Secure Shipping', recommended: true },
+        litbuy: { text: ' in Coupons', recommended: false },
+        mulebuy: { text: ',000 Bonus', recommended: false },
+        superbuy: { text: 'Best for USA & Europe', recommended: false },
+        oopbuy: { text: ' in Coupons', recommended: false }
     };
 
     var likedProducts = JSON.parse(localStorage.getItem('likedProducts') || '{}');
@@ -54,18 +55,7 @@
         });
     }
 
-    function loadProductData(id) {
-        return fetchJsonWithRetry('/data/product-index.json').then(function (index) {
-            var category = index[id];
-            if (!category) throw new Error('Product id not found in index: ' + id);
-            return fetchJsonWithRetry('/data/' + encodeURIComponent(category) + '.json');
-        }).then(function (categoryProducts) {
-            products = categoryProducts;
-            return products;
-        });
-    }
-
-    function escapeHtml(str) {
+    function loadProductData(id) { return new Promise(function (resolve, reject) { try { var raw = document.getElementById('catalogData'); if (!raw) throw new Error('catalogData not found'); var all = JSON.parse(raw.textContent); for (var i = 0; i < all.length; i++) { if (all[i].id === id) { products = all; resolve(all); return; } } reject(new Error('Product id not found: ' + id)); } catch (e) { reject(e); } }); }function escapeHtml(str) {
         var div = document.createElement('div');
         div.textContent = str;
         return div.innerHTML;
@@ -76,9 +66,11 @@
         if (!product.links) return html;
 
         var agents = [
-            { key: 'usfans', cls: 'usfans-btn', agentKey: 'USFANS' },
+            { key: 'kakobuy', cls: 'kakobuy-btn', agentKey: 'KAKOBUY' },
             { key: 'litbuy', cls: 'litbuy-btn', agentKey: 'LITBUY' },
-            { key: 'kakobuy', cls: 'kakobuy-btn', agentKey: 'KAKOBUY' }
+            { key: 'mulebuy', cls: 'mulebuy-btn', agentKey: 'MULEBUY' },
+            { key: 'superbuy', cls: 'superbuy-btn', agentKey: 'SUPERBUY' },
+            { key: 'oopbuy', cls: 'oopbuy-btn', agentKey: 'OOPBUY' }
         ];
 
         for (var i = 0; i < agents.length; i++) {

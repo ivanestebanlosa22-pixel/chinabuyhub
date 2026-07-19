@@ -17,6 +17,7 @@
         currentCategory: 'all',
         currentBrand: 'all',
         currentGender: 'all',
+        currentSort: 'default',
         searchQuery: '',
         fuzzyEnabled: false,
         fuse: null,
@@ -26,15 +27,19 @@
     };
 
     var catalogAgents = {
-        'KAKOBUY': { name: 'Kakobuy', logo: 'images/kakobuy-logo.jpg' },
+        'KAKOBUY': { name: 'Kakobuy', logo: 'images/kakobuy-logo.webp' },
         'LITBUY': { name: 'Litbuy', logo: 'images/litbuy-logo.webp' },
-        'USFANS': { name: 'USFans', logo: 'https://s3-eu-west-1.amazonaws.com/tpd/logos/6825a376b16be873d3c23e82/0x0.png' }
+        'MULEBUY': { name: 'Mulebuy', logo: 'images/mulebuy-logo.webp' },
+        'SUPERBUY': { name: 'Superbuy', logo: 'images/superbuy-logo.webp' },
+        'OOPBUY': { name: 'Oopbuy', logo: 'images/oopbuy-logo.webp' }
     };
 
     var agentMessages = {
-        usfans: { text: '\u{1F1FA}\u{1F1F8} Best for USA & Europe', recommended: true },
+        kakobuy: { text: '\u26A1 Fast & Secure Shipping', recommended: true },
         litbuy: { text: '\u{1F381} $500 in Coupons', recommended: false },
-        kakobuy: { text: '\u26A1 Fast & Secure Shipping', recommended: false }
+        mulebuy: { text: '\u{1F4E6} $441 pack + 15% OFF', recommended: false },
+        superbuy: { text: '\u{1F4B0} $78 coupon + cashback', recommended: false },
+        oopbuy: { text: '\u{1F3AF} $490 pack + 15% OFF', recommended: false }
     };
 
     /* ---- FUSE.JS INIT ---- */
@@ -142,6 +147,20 @@
             }
         }
 
+        if (state.currentSort && state.currentSort !== 'default') {
+            var sort = state.currentSort;
+            list.sort(function (a, b) {
+                if (sort === 'brand') return (a.brand || '').localeCompare(b.brand || '');
+                if (sort === 'name') return (a.name || '').localeCompare(b.name || '');
+                if (sort === 'price-asc' || sort === 'price-desc') {
+                    var pa = parseFloat((a.price || '0').toString().replace(/[^0-9.]/g, '')) || 0;
+                    var pb = parseFloat((b.price || '0').toString().replace(/[^0-9.]/g, '')) || 0;
+                    return sort === 'price-asc' ? pa - pb : pb - pa;
+                }
+                return 0;
+            });
+        }
+
         return list;
     }
 
@@ -213,6 +232,7 @@
 
             initLazyImages(container);
             initLikeButtons(container);
+            initBuyButtons(container);
             initTiltEffect(container);
             renderPagination(totalPages);
 
@@ -237,26 +257,48 @@
     }
 
     function buildAgentLinks(product) {
-        var html = '';
-        if (!product.links) return html;
-
+        if (!product.links) return '';
         var agents = [
-            { key: 'usfans', cls: 'usfans-btn', agentKey: 'USFANS' },
+            { key: 'kakobuy', cls: 'kakobuy-btn', agentKey: 'KAKOBUY' },
             { key: 'litbuy', cls: 'litbuy-btn', agentKey: 'LITBUY' },
-            { key: 'kakobuy', cls: 'kakobuy-btn', agentKey: 'KAKOBUY' }
+            { key: 'mulebuy', cls: 'mulebuy-btn', agentKey: 'MULEBUY' },
+            { key: 'superbuy', cls: 'superbuy-btn', agentKey: 'SUPERBUY' },
+            { key: 'oopbuy', cls: 'oopbuy-btn', agentKey: 'OOPBUY' }
         ];
 
+        // Extract the Weidian product id from an existing agent link (kakobuy/litbuy).
+        var weidianId = '';
+        var existing = product.links.kakobuy || product.links.litbuy || '';
+        var m = existing.match(/itemID%3D(\d+)/) || existing.match(/weidian\/(\d+)/);
+        if (m) weidianId = m[1];
+
+        // Per-agent product-link template (id injected).
+        var templates = {
+            mulebuy: function (id) { return 'https://mulebuy.com/product/?shop_type=weidian&id=' + id + '&ref=200642502'; },
+            oopbuy: function (id) { return 'https://oopbuy.com/product/weidian/' + id + '?inviteCode=GH40R4J0O'; },
+            superbuy: function (id) { return 'https://www.superbuy.com/en/page/buy/?nTag=Home-search&from=search-input&partnercode=Ey3NrI&url=https%3A%2F%2Fweidian.com%2Fitem.html%3FitemID%3D' + id + '&trackPayload=pc_header_search_goods'; }
+        };
+
+        var items = '';
         for (var i = 0; i < agents.length; i++) {
             var a = agents[i];
-            if (product.links[a.key]) {
-                var msg = agentMessages[a.key].text;
-                html += '<a href="' + product.links[a.key] + '" class="agent-buy-btn ' + a.cls + '" target="_blank" rel="noopener noreferrer">' +
-                    '<img src="' + catalogAgents[a.agentKey].logo + '" class="agent-logo-small" alt="Buy at ' + catalogAgents[a.agentKey].name + '">' +
-                    'Buy at ' + catalogAgents[a.agentKey].name + ' ' + msg +
-                '</a>';
-            }
+            var url = product.links[a.key];
+            if (!url && weidianId && templates[a.key]) url = templates[a.key](weidianId);
+            if (!url) continue;
+            var msg = agentMessages[a.key] ? agentMessages[a.key].text : '';
+            items += '<a href="' + url + '" class="agent-drop-item ' + a.cls + '" target="_blank" rel="noopener noreferrer">' +
+                '<img src="' + catalogAgents[a.agentKey].logo + '" class="agent-logo-small" alt="Buy at ' + catalogAgents[a.agentKey].name + '">' +
+                '<span class="agent-drop-name">' + catalogAgents[a.agentKey].name + '</span>' +
+                '<span class="agent-drop-msg">' + msg + '</span>' +
+            '</a>';
         }
-        return html;
+        if (!items) return '';
+
+        var pid = product.id ? product.id.replace(/[^a-zA-Z0-9]/g, '') : 'x';
+        return '<div class="agent-buy-wrap">' +
+            '<button type="button" class="agent-buy-btn" aria-expanded="false" aria-controls="drop-' + pid + '">Buy ▾</button>' +
+            '<div class="agent-dropdown" id="drop-' + pid + '" role="menu">' + items + '</div>' +
+        '</div>';
     }
 
     /* ---- LAZY IMAGE LOADING ---- */
@@ -393,6 +435,30 @@
                     }
                 });
             })(likeEls[i]);
+        }
+    }
+
+    /* ---- BUY BUTTON DROPDOWN ---- */
+    function initBuyButtons(root) {
+        var wraps = root.querySelectorAll('.agent-buy-wrap');
+        for (var i = 0; i < wraps.length; i++) {
+            (function (wrap) {
+                var btn = wrap.querySelector('.agent-buy-btn');
+                var drop = wrap.querySelector('.agent-dropdown');
+                if (!btn || !drop) return;
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    var open = wrap.classList.toggle('open');
+                    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+                });
+                document.addEventListener('click', function (e) {
+                    if (!wrap.contains(e.target)) {
+                        wrap.classList.remove('open');
+                        btn.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            })(wraps[i]);
         }
     }
 
@@ -575,6 +641,17 @@
         }
     }
 
+    /* ---- SORT SELECT ---- */
+    function bindSortSelect() {
+        var sel = document.getElementById('sortSelect');
+        if (!sel) return;
+        sel.addEventListener('change', function () {
+            state.currentSort = sel.value;
+            state.currentPage = 1;
+            renderProducts();
+        });
+    }
+
     /* ---- EVENT BINDINGS ---- */
     function bindCategoryButtons() {
         var btns = document.querySelectorAll('.category-btn');
@@ -640,6 +717,7 @@
             bindCategoryButtons();
             bindSearchInput();
             bindGenderButtons();
+            bindSortSelect();
             
         }
 
@@ -652,40 +730,15 @@
             }
         }
 
-        // Load each category chunk independently instead of one ~9MB blob.
-        // If one chunk is slow/corrupted/truncated in transit, only that
-        // category is skipped — the rest of the catalog still renders.
-        var CATEGORY_FILES = ['ACCESSORIES', 'BAGS', 'CAPS', 'ELECTRONICS', 'HOODIES', 'JACKETS', 'PANTS', 'SHORTS', 'SNEAKERS', 'T-SHIRTS', 'WOMAN'];
-
-        function fetchJsonWithRetry(url, attempt) {
-            attempt = attempt || 1;
-            var bustUrl = attempt === 1 ? url : url + (url.indexOf('?') === -1 ? '?' : '&') + 'retry=' + Date.now();
-            return fetch(bustUrl, { cache: attempt === 1 ? 'default' : 'reload' }).then(function (r) {
-                if (!r.ok) throw new Error('HTTP ' + r.status + ' for ' + url);
-                return r.json();
-            }).catch(function (err) {
-                if (attempt >= 2) throw err;
-                return fetchJsonWithRetry(url, attempt + 1);
-            });
+        // Products are embedded in the page as <script id="catalogData" type="application/json">.
+        // No fetch needed — works with double-click (file://) and over HTTP.
+        try {
+            var rawData = document.getElementById('catalogData');
+            var parsed = rawData ? JSON.parse(rawData.textContent) : [];
+            initWithData(parsed);
+        } catch (e) {
+            showLoadError(e);
         }
-
-        function loadAllCategoryChunks() {
-            var promises = CATEGORY_FILES.map(function (cat) {
-                return fetchJsonWithRetry('/data/' + encodeURIComponent(cat) + '.json?v=20260706').catch(function (err) {
-                    console.error('Category chunk failed, skipping: ' + cat, err);
-                    return [];
-                });
-            });
-            return Promise.all(promises).then(function (chunks) {
-                var merged = [].concat.apply([], chunks);
-                if (merged.length === 0) throw new Error('All category chunks failed to load');
-                return merged;
-            });
-        }
-
-        loadAllCategoryChunks()
-            .then(initWithData)
-            .catch(showLoadError);
     }
 
     if (document.readyState === 'loading') {
