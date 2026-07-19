@@ -214,7 +214,7 @@
                     '</div>' +
                     '<a href="/product/' + product.id + '" class="product-image-link" aria-label="View ' + escapeHtml(product.name) + '">' +
                     '<div class="product-image-wrapper">' +
-                        '<img src="' + (product.image || '') + '" alt="' + escapeHtml(product.name || 'Product') + '" class="product-image" loading="lazy" data-loaded="false" fetchpriority="' + (index === 0 && state.currentPage === 1 ? 'high' : 'auto') + '">' +
+                        '<img src="' + escapeHtml(product.image || '') + '" alt="' + escapeHtml(product.name || 'Product') + '" class="product-image" loading="lazy" data-loaded="false" fetchpriority="' + (index === 0 && state.currentPage === 1 ? 'high' : 'auto') + '">' +
                         '<div class="product-image-fallback">\uD83D\uDCE6</div>' +
                     '</div>' +
                     '</a>' +

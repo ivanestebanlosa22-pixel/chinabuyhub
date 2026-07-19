@@ -4,10 +4,12 @@
 // Rebuilds the per-category catalog chunks (data/<CATEGORY>.json) and the
 // lightweight id -> category lookup (data/product-index.json) from products.js.
 
-// Simple token check to prevent unauthorized access
-$expectedToken = 'cbh_cron_token_2026';
+// Token check to prevent unauthorized access. Token lives outside the web
+// root (secrets/chinabuyhub.env), same as GROQ_API_KEY — never hardcode it here.
+require_once __DIR__ . '/ai-config.php';
+$expectedToken = $_ENV['CRON_REBUILD_TOKEN'] ?? '';
 $providedToken = $_GET['token'] ?? '';
-if ($providedToken !== $expectedToken) {
+if ($expectedToken === '' || !hash_equals($expectedToken, $providedToken)) {
     http_response_code(403);
     die('Forbidden: invalid or missing token');
 }
