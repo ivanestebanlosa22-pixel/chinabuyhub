@@ -212,7 +212,7 @@
                         '<span class="like-icon">' + (isLiked ? '\u2764\uFE0F' : '\uD83D\uDC99') + '</span>' +
                         '<span class="like-count">' + displayLikes + '</span>' +
                     '</div>' +
-                    '<a href="/product/' + product.id + '" class="product-image-link" aria-label="View ' + escapeHtml(product.name) + '">' +
+                    '<a href="/catalog#' + product.id + '" class="product-image-link" aria-label="View ' + escapeHtml(product.name) + '">' +
                     '<div class="product-image-wrapper">' +
                         '<img src="' + escapeHtml(product.image || '') + '" alt="' + escapeHtml(product.name || 'Product') + '" class="product-image" loading="lazy" data-loaded="false" fetchpriority="' + (index === 0 && state.currentPage === 1 ? 'high' : 'auto') + '">' +
                         '<div class="product-image-fallback">\uD83D\uDCE6</div>' +

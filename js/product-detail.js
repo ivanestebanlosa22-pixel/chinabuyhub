@@ -2,7 +2,7 @@
     'use strict';
 
     var catalogAgents = {
-        'KAKOBUY': { name: 'Kakobuy', logo: 'images/kakobuy-logo.jpg' },
+        'KAKOBUY': { name: 'Kakobuy', logo: 'images/kakobuy-logo.webp' },
         'LITBUY': { name: 'Litbuy', logo: 'images/litbuy-logo.webp' },
     };
 

@@ -37,6 +37,17 @@ _gsc_extract/
 *.zip
 *.gz
 
+# Sensitive / internal scraping data and scripts (never commit)
+products.tsv
+scrape_log.txt
+scrape_err.txt
+scrape_*.txt
+scripts/
+kakobuy_sample.html
+coverage_tmp/
+kimi_*.exe
+*.exe
+
 # Temporary files
 tmp/
 temp/

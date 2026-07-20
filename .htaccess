@@ -1,10 +1,9 @@
-# ChinaBuyHub - Apache Configuration
+﻿# ChinaBuyHub - Apache Configuration
 Options -Indexes
 
 # COMPRESSION
 <IfModule mod_deflate.c>
     AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml application/rss+xml image/svg+xml
-    # Remove browser bugs
     BrowserMatch ^Mozilla/4 gzip-only-text/html
     BrowserMatch ^Mozilla/4\.0[678] no-gzip
     BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
@@ -59,18 +58,17 @@ Options -Indexes
     # NEVER REWRITE XML/STATIC FILES
     RewriteRule \.(xml|txt|pdf|zip|gz|json)$ - [L]
 
-    # SERVE PRODUCT DETAIL PAGES: /product/ID -> product.html
-    RewriteRule ^product/([^/]+)/?$ product.html [L]
+    # PRODUCT PAGES DISABLED - redirect to catalog
+    RewriteRule ^product/.*$ /catalog [L,R=301]
 
-    # REDIRECT OLD PRODUCT URLS (/p/ID -> /product/ID, /p/ -> /catalog)
-    RewriteRule ^p/([^/]+)/?$ /product/$1 [L,R=301]
-    RewriteRule ^p/?$ /catalog [L,R=301]
+    # REDIRECT OLD PRODUCT URLS TO CATALOG
     RewriteRule ^p/.*$ /catalog [L,R=301]
-    RewriteRule ^p/?$ /catalog [L,R=301]
 
     # REDIRECT OLD URLs
-    # cost-calculator is now a dedicated root page (cost-calculator.html), handled by clean URL rules below
     RewriteRule ^blog/finds-es/?$ /finds-es [L,R=301]
+
+    # BLOG ARTICLES ACCESSED WITHOUT /blog/ PREFIX
+    RewriteRule ^(kakobuy-invite-code|best-chinese-shopping-agents|how-to-buy|how-to-quality-check-qc|1688-guide|1688-vs-taobao|agent-fees-comparison|avoid-scams-china-buying|best-items-under-10-dollars|customs-import-taxes-china|haul-guide-china|kakobuy-review|litbuy-review|pandabuy-alternatives|payment-methods-china|referral-codes-all-agents|shipping-from-china|shipping-methods-compared|size-conversion-chart|taobao-guide|weidian-guide)/?$ /blog/$1 [L,R=301]
     RewriteRule ^catalogo/?$ /catalog [L,R=301]
     RewriteRule ^agentes(\.html?)?$ /agents [L,R=301]
     RewriteRule ^guias(/.*)?$ /blog/how-to-buy [L,R=301]
@@ -112,14 +110,12 @@ Options -Indexes
     RewriteRule ^index\.html$ / [L,R=301]
 
     # CLEAN URLs - subfolders /blog/ and /c/
-    RewriteCond %{ENV:REDIRECT_STATUS} ^$
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME}.html -f
     RewriteRule ^([^/]+)/([^/]+)/?$ $1/$2.html [NC,L]
 
     # CLEAN URLs - root
-    RewriteCond %{ENV:REDIRECT_STATUS} ^$
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME}.html -f
@@ -138,14 +134,26 @@ ErrorDocument 404 /404.html
     Deny from all
 </FilesMatch>
 
-# PROTECT .env FILES (API keys must never be served over HTTP)
+# PROTECT SENSITIVE / INTERNAL FILES (scraping data, logs, build scripts)
+<FilesMatch "(^products\.tsv$|^scrape_log\.txt$|^scrape_err\.txt$|^conv_webp\.py$|^cron-rebuild-catalog\.php$)">
+    Require all denied
+</FilesMatch>
+RedirectMatch 403 ^/scripts/
+RedirectMatch 403 ^/products\.tsv$
+RedirectMatch 403 ^/scrape_log\.txt$
+RedirectMatch 403 ^/scrape_err\.txt$
+
+# PROTECT .env FILES
 <FilesMatch "\.env">
     Require all denied
 </FilesMatch>
 
 AddDefaultCharset UTF-8
 
-# SITEMAP — force XML content type (prevents Google Search Console "HTML" error)
+# FAVICON FALLBACK
+RewriteRule ^favicon\.ico$ /images/favicon.webp [L,T=image/webp]
+
+# SITEMAP - force XML content type
 <Files "sitemap.xml">
     Header set Content-Type "application/xml; charset=UTF-8"
 </Files>

@@ -1,4 +1,6 @@
 <?php
+ini_set('display_errors', '0');
+error_reporting(0);
 header('Content-Type: application/json; charset=utf-8');
 
 // Restrict CORS to specific domains
